@@ -1,0 +1,199 @@
+CREATE ROLE "Local_manager" WITH
+	NOLOGIN
+	NOSUPERUSER
+	NOCREATEDB
+	NOCREATEROLE
+	INHERIT
+	NOREPLICATION
+	CONNECTION LIMIT -1;
+	
+CREATE ROLE "Analyst" WITH
+	NOLOGIN
+	NOSUPERUSER
+	NOCREATEDB
+	NOCREATEROLE
+	INHERIT
+	NOREPLICATION
+	CONNECTION LIMIT -1;
+	
+CREATE ROLE "Manager" WITH
+	NOLOGIN
+	NOSUPERUSER
+	NOCREATEDB
+	NOCREATEROLE
+	INHERIT
+	NOREPLICATION
+	CONNECTION LIMIT -1;
+
+CREATE ROLE "Staff" WITH
+	NOLOGIN
+	NOSUPERUSER
+	NOCREATEDB
+	NOCREATEROLE
+	INHERIT
+	NOREPLICATION
+	CONNECTION LIMIT -1;
+
+CREATE ROLE "Administrator" WITH
+	NOLOGIN
+	SUPERUSER
+	CREATEDB
+	CREATEROLE
+	INHERIT
+	NOREPLICATION
+	CONNECTION LIMIT -1;
+
+
+CREATE ROLE "AlexandraFomina@cat.ru"
+                LOGIN
+                NOSUPERUSER 
+                NOCREATEDB 
+                NOCREATEROLE 
+                INHERIT 
+                NOREPLICATION
+                CONNECTION LIMIT -1 
+                PASSWORD '4LJETG';
+GRANT "Staff" TO "AlexandraFomina@cat.ru" WITH ADMIN OPTION;
+
+CREATE ROLE "ValeriaDubinina@cat.ru"
+                LOGIN
+                NOSUPERUSER 
+                NOCREATEDB 
+                NOCREATEROLE 
+                INHERIT 
+                NOREPLICATION
+                CONNECTION LIMIT -1
+                PASSWORD 'bZhn76';
+GRANT "Staff" TO "ValeriaDubinina@cat.ru" WITH ADMIN OPTION;
+
+CREATE ROLE "LeylaLubimova@cat.ru"
+                LOGIN
+                NOSUPERUSER 
+                NOCREATEDB 
+                NOCREATEROLE 
+                INHERIT 
+                NOREPLICATION
+                CONNECTION LIMIT -1
+                PASSWORD 'QTydLm';
+GRANT "Staff" TO "LeylaLubimova@cat.ru" WITH ADMIN OPTION;
+
+CREATE ROLE "AlicaBelikova@cat.ru"
+                LOGIN
+                NOSUPERUSER 
+                NOCREATEDB 
+                NOCREATEROLE 
+                INHERIT 
+                NOREPLICATION
+                CONNECTION LIMIT -1
+               	PASSWORD 'VCzH1j';
+GRANT "Staff" TO "AlicaBelikova@cat.ru" WITH ADMIN OPTION;
+
+CREATE ROLE "PlatonFrolov@cat.ru"
+                LOGIN
+                NOSUPERUSER 
+                NOCREATEDB 
+                NOCREATEROLE 
+                INHERIT 
+                NOREPLICATION
+                CONNECTION LIMIT -1 
+                PASSWORD 'jA2DZu';
+GRANT "Staff" TO "PlatonFrolov@cat.ru" WITH ADMIN OPTION;
+
+CREATE ROLE "UliaVinokyrova@cat.ru"
+                LOGIN
+                NOSUPERUSER 
+                NOCREATEDB 
+                NOCREATEROLE 
+                INHERIT 
+                NOREPLICATION
+                CONNECTION LIMIT -1 
+                PASSWORD '3NOLnx';
+GRANT "Staff" TO "UliaVinokyrova@cat.ru" WITH ADMIN OPTION;
+
+CREATE ROLE "UlianaKozlova@cat.ru"
+                LOGIN
+                NOSUPERUSER 
+                NOCREATEDB 
+                NOCREATEROLE 
+                INHERIT 
+                NOREPLICATION
+                CONNECTION LIMIT -1 
+                PASSWORD '6DmFB5';
+GRANT "Staff" TO "UlianaKozlova@cat.ru" WITH ADMIN OPTION;
+
+CREATE ROLE "RomanZayzev@cat.ru"
+                LOGIN
+                NOSUPERUSER 
+                NOCREATEDB 
+                NOCREATEROLE 
+                INHERIT 
+                NOREPLICATION
+                CONNECTION LIMIT -1 
+                PASSWORD '97PiFL';
+GRANT "Local_manager" TO "RomanZayzev@cat.ru" WITH ADMIN OPTION;
+
+CREATE ROLE "KonstantinSokolov@cat.ru"
+                LOGIN
+                SUPERUSER 
+                CREATEDB 
+                CREATEROLE 
+                INHERIT 
+                NOREPLICATION
+                CONNECTION LIMIT -1 
+                PASSWORD 'zSrhsG';
+GRANT "Administrator" TO "KonstantinSokolov@cat.ru" WITH ADMIN OPTION;
+
+CREATE ROLE "VarvaraAndreeva@cat.ru"
+                LOGIN
+                NOSUPERUSER 
+                NOCREATEDB 
+                NOCREATEROLE 
+                INHERIT 
+                NOREPLICATION
+                CONNECTION LIMIT -1
+                PASSWORD 't7vPZC';
+GRANT "Manager" TO "VarvaraAndreeva@cat.ru" WITH ADMIN OPTION;
+
+CREATE ROLE "DariaKudryavzeva@cat.ru"
+                LOGIN
+                NOSUPERUSER 
+                NOCREATEDB 
+                NOCREATEROLE 
+                INHERIT 
+                NOREPLICATION
+                CONNECTION LIMIT -1 
+                PASSWORD 'pj4VTb';
+GRANT "Analyst" TO "DariaKudryavzeva@cat.ru" WITH ADMIN OPTION;
+
+CREATE ROLE "MayaSvetsova@cat.ru"
+                LOGIN
+                NOSUPERUSER 
+                NOCREATEDB 
+                NOCREATEROLE 
+                INHERIT 
+                NOREPLICATION
+                CONNECTION LIMIT -1
+                PASSWORD 'jhJLqb';
+GRANT "Local_manager" TO "MayaSvetsova@cat.ru" WITH ADMIN OPTION;
+
+CREATE ROLE "ArtemSolovev@cat.ru"
+                LOGIN
+                NOSUPERUSER 
+                NOCREATEDB 
+                NOCREATEROLE 
+                INHERIT 
+                NOREPLICATION
+                CONNECTION LIMIT -1 
+                PASSWORD 'XrSJdd';
+GRANT "Local_manager" TO "ArtemSolovev@cat.ru" WITH ADMIN OPTION;
+
+CREATE ROLE "AnastasiaMaksimova@cat.ru"
+               LOGIN
+                NOSUPERUSER 
+                NOCREATEDB 
+                NOCREATEROLE 
+                INHERIT 
+                NOREPLICATION
+                CONNECTION LIMIT -1 
+                PASSWORD 'KdI8qC';
+GRANT "Local_manager" TO "AnastasiaMaksimova@cat.ru" WITH ADMIN OPTION;
