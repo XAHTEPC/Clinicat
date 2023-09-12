@@ -1,11 +1,13 @@
 package com.example.clinicat.PaneModel;
 
 import com.example.clinicat.DataBase.Postgre;
+import com.example.clinicat.View.ChoiseFront;
 import com.example.clinicat.View.ScrollFront;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -63,35 +65,16 @@ public class Visit {String id;
         cl.setLayoutY(60);
         cl.setFont(Font.font("Verdana",13));
 
-        Text em = new Text("Сотрудник");
-        em.setLayoutX(220);
+        Text em = new Text("Заведение");
+        em.setLayoutX(350);
         em.setLayoutY(60);
         em.setFont(Font.font("Verdana",13));
 
-        Text ser = new Text("Услуга");
-        ser.setLayoutX(360);
-        ser.setLayoutY(60);
-        ser.setFont(Font.font("Verdana",13));
-
         Text price = new Text("Цена");
-        price.setLayoutX(460);
+        price.setLayoutX(500);
         price.setLayoutY(60);
         price.setFont(Font.font("Verdana",13));
 
-        Text str = new Text("Заведение");
-        str.setLayoutX(510);
-        str.setLayoutY(60);
-        str.setFont(Font.font("Verdana",13));
-
-        Text point = new Text("Оценка");
-        point.setLayoutX(600);
-        point.setLayoutY(60);
-        point.setFont(Font.font("Verdana",13));
-
-        Text date = new Text("Дата");
-        date.setLayoutX(680);
-        date.setLayoutY(60);
-        date.setFont(Font.font("Verdana",13));
         Visit[] mas = Postgre.getAllVisit_Staff();
         int u = 80;
         for(int i=0; i<mas.length;i++, u+=70){
@@ -113,66 +96,27 @@ public class Visit {String id;
             cl_text.setLayoutX(50);
             cl_text.setLayoutY(0 + u);
             cl_text.setMaxHeight(40);
-            cl_text.setMaxWidth(140);
-            cl_text.setMinWidth(140);
+            cl_text.setMaxWidth(200);
+            cl_text.setMinWidth(200);
 
             TextArea emp_text = new TextArea();
-            emp_text.setText(mas[i].employee_name);
+            emp_text.setText(mas[i].structure_name);
             emp_text.setEditable(false);
-            emp_text.setLayoutX(200);
+            emp_text.setLayoutX(300);
             emp_text.setLayoutY(0 + u);
             emp_text.setMaxHeight(40);
             emp_text.setMaxWidth(140);
             emp_text.setMinHeight(40);
             emp_text.setMinWidth(140);
 
-            TextArea ser_text = new TextArea();
-            ser_text.setText(mas[i].service_name);
-            ser_text.setEditable(false);
-            ser_text.setLayoutX(350);
-            ser_text.setLayoutY(0 + u);
-            ser_text.setMaxHeight(40);
-            ser_text.setMaxWidth(100);
-            ser_text.setMinHeight(40);
-            ser_text.setMinWidth(100);
-
             TextArea price_text = new TextArea();
             price_text.setText(mas[i].summa);
             price_text.setEditable(false);
-            price_text.setLayoutX(460);
+            price_text.setLayoutX(500);
             price_text.setLayoutY(0 + u);
             price_text.setMaxHeight(40);
-            price_text.setMaxWidth(40);
+            price_text.setMaxWidth(100);
 
-            TextArea str_text = new TextArea();
-            str_text.setText(mas[i].structure_name);
-            str_text.setEditable(false);
-            str_text.setLayoutX(510);
-            str_text.setLayoutY(0 + u);
-            str_text.setMaxHeight(40);
-            str_text.setMaxWidth(80);
-            str_text.setMinHeight(40);
-            str_text.setMinWidth(80);
-
-            TextArea point_text = new TextArea();
-            point_text.setText(mas[i].points);
-            point_text.setEditable(false);
-            point_text.setLayoutX(600);
-            point_text.setLayoutY(0 + u);
-            point_text.setMaxHeight(40);
-            point_text.setMaxWidth(40);
-            point_text.setMinHeight(40);
-            point_text.setMinWidth(40);
-
-            TextArea data_text = new TextArea();
-            data_text.setText(mas[i].data);
-            data_text.setEditable(false);
-            data_text.setLayoutX(650);
-            data_text.setLayoutY(0 + u);
-            data_text.setMaxHeight(40);
-            data_text.setMaxWidth(80);
-            data_text.setMinHeight(40);
-            data_text.setMinWidth(80);
 
             FileInputStream Url = new FileInputStream("png/pen.png");
             Image url = new Image(Url);
@@ -198,20 +142,19 @@ public class Visit {String id;
                     }
                 });
             }
-            res.getChildren().addAll(num_text,cl_text,emp_text,ser_text,price_text,str_text,point_text, data_text);
+            res.getChildren().addAll(num_text,cl_text,emp_text,price_text);
         }
 
-        res.getChildren().addAll(num, cl, em, ser, price, str, point, date);
+        res.getChildren().addAll(num, cl, em, price);
         return res;
     }
     static ObservableList<String> service = FXCollections.observableArrayList(mas3);
-    static ComboBox<String> comboBox3;
-
+    static Pane choise;
     public static void edit_pos(String id) throws SQLException, FileNotFoundException, ClassNotFoundException {
         Group root_add = new Group();
-        Visit visit = Postgre.getVisit_byID(id);
-        String nameClient = Postgre.getClientName_byID(visit.client_name);
-        Scene scene_add = new Scene(root_add, 418, 418);
+        Visit visit = Postgre.getReceipt_byID(id);
+        String nameClient = visit.client_name;
+        Scene scene_add = new Scene(root_add, 418, 598);
         Stage newWindow = new Stage();
         newWindow.initStyle(StageStyle.DECORATED);
 
@@ -238,114 +181,187 @@ public class Visit {String id;
         ComboBox<String> comboBox2 = new ComboBox<String>(work);
         comboBox2.setValue(visit.structure_name);
         comboBox2.setMaxWidth(215);
+        comboBox2.setEditable(false);
         comboBox2.setMinWidth(215);
         comboBox2.setBackground(null);
         comboBox2.setLayoutX(180);
         comboBox2.setLayoutY(110);
+
+        choise = new Pane();
+        if(visit.structure_name.equals("Чистый пес")||visit.structure_name.equals("Чистый лис"))
+            choise = ChoiseFront.getPane(0, id);
+        else
+            choise =ChoiseFront.getPane(1,id);
+        choise.setLayoutX(30);
+        choise.setLayoutY(200);
+        root_add.getChildren().addAll(choise);
         comboBox2.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                root_add.getChildren().remove(choise);
                 Name = (comboBox2.getSelectionModel().getSelectedItem());
                 System.out.println("NAme:"+Name);
-                try {
-                    mas3 = Postgre.getService_name(Name);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
+                if(Name.equals("Чистый пес")||Name.equals("Чистый лис")){
+                    try {
+                        choise = ChoiseFront.getPane(0, "");
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-                service = FXCollections.observableArrayList(mas3);
-                comboBox3.setItems(service);
+                else {
+                    try {
+                        choise = ChoiseFront.getPane(1, "");
+                    } catch (FileNotFoundException | SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                choise.setLayoutX(30);
+                choise.setLayoutY(200);
+                root_add.getChildren().addAll(choise);
             }
         });
-        comboBox3 = new ComboBox<String>(service);
-        comboBox3.setValue(visit.service_name);
-        comboBox3.setMaxWidth(215);
-        comboBox3.setMinWidth(215);
-        comboBox3.setBackground(null);
-        comboBox3.setLayoutX(180);
-        comboBox3.setLayoutY(155);
 
         TextField DATA = new TextField();
         DATA.setText(visit.data);
         DATA.setLayoutX(180);
         DATA.setBackground(null);
-        DATA.setLayoutY(200);
+        DATA.setLayoutY(416);
         DATA.setStyle("-fx-background-color: transparent;");
         DATA.setMaxHeight(32);
         DATA.setMaxWidth(215);
-
-        TextField emp = new TextField();
-        emp.setText(visit.employee_name);
-        emp.setEditable(false);
-        emp.setBackground(Background.EMPTY);
-        //emp.setBackground(null);
-        emp.setLayoutX(180);
-        emp.setLayoutY(245);
-        emp.setMaxHeight(32);
-        emp.setMaxWidth(215);
 
         TextField points = new TextField();
         points.setText(visit.points);
         points.setBackground(null);
         points.setLayoutX(180);
-        points.setLayoutY(290);
+        points.setLayoutY(460);
         points.setMaxHeight(32);
         points.setMaxWidth(215);
 
         Button save = new Button();
-        save.setLayoutX(33);
-        save.setLayoutY(344);
+        save.setLayoutX(30);
+        save.setLayoutY(514);
         save.setBackground(null);
         save.setPrefSize(150,32);
 
         Button del = new Button();
         del.setBackground(null);
         del.setLayoutX(216);
-        del.setLayoutY(344);
+        del.setLayoutY(514);
         del.setPrefSize(150,32);
         root_add.getChildren().addAll(del,save);
 
         String finalId_visit = id;
         save.setOnAction(x ->{
+            System.out.println("mi tut");
             String t1,t2,t3,t4,t5,t6,t7 = "";
-            t1 = name.getText();
-            t2 = comboBox2.getSelectionModel().getSelectedItem();
-            t3 = comboBox3.getSelectionModel().getSelectedItem();
-            t4 = DATA.getText();
-            t5 = emp.getText();
-            t6 = points.getText();
-            if(chechPos(t4,t6)) {
+            String[][] mas = null;
+            try {
+                mas =  Postgre.getBooking_byID(id);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            for(int i=0;i<mas.length;i++){
                 try {
-                    t7 = Postgre.getPrice(t3);
+                    Postgre.delBooking(mas[i][1]);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
+                }
+            }
+            t1 = name.getText();
+            t2 = comboBox2.getSelectionModel().getSelectedItem();
+            t4 = DATA.getText();
+            t6 = points.getText();
+            String service_id ="";
+            System.out.println("t4;"+t4 +"  t6: "+ t6);
+            boolean fl = chechPos(t4,t6);
+            System.out.println(fl);
+            {
+                boolean[] mas2 = ChoiseFront.getGruMas();
+                if (mas2 == null) {
+                    mas2 = ChoiseFront.getVetMas();
+                }
+                String[] arr = {""};
+                String lastID = "";
+                try {
+                    arr = Postgre.getEmployee_from(t2);
+                    lastID = id;
+                } catch (SQLException e) {
                     throw new RuntimeException(e);
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                boolean fla = mas2.length==3;
+                int kol = mas2.length;
+                for(int i=0;i<mas2.length;i++){
+                    if(mas2[i]){
+                        if(fla&&i==0){
+                            service_id = "1";
+                        }
+                        else  if(i==0) {
+                            service_id = "4";
+                        } else if(fla&&i==1){
+                            service_id = "2";
+                        }
+                        else  if(i==1) {
+                            service_id = "5";
+                        }if(fla&&i==2){
+                            service_id = "3";
+                        }
+                        else  if(i==2) {
+                            service_id = "6";
+                        }
+                        else  if(i==3) {
+                            service_id = "7";
+                        }
+                        else  if(i==4) {
+                            service_id = "8";
+                        }
+                        int emp_id = (int) Math.random()*(arr.length-1)+0;
+                        String emp = arr[emp_id];
+                        try {
+                            System.out.println("i");
+                            Postgre.addBooking(finalId_visit, service_id, t4, t6,emp,lastID);
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        } catch (ClassNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                 }
                 try {
-                    Postgre.UpdateVisit(finalId_visit, visit.client_name, t2, t3, t4, t5, t7, t6);
-                    Pane p = Visit.getPane(flag);
-                    ScrollFront.scrollPane.setContent(p);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
+                    Postgre.UpdateReceipt(lastID, finalId_visit);
+                } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+                System.out.println("ok");
                 newWindow.close();
             }
             name.setText("Проверьте данные");
         });
 
         del.setOnAction(va ->{
+            String[][] mas = null;
             try {
-                Postgre.delVisit(id);
+                mas =  Postgre.getBooking_byID(id);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                for(int i=0;i<mas.length;i++){
+                    try {
+                        Postgre.delBooking(mas[i][1]);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                Postgre.delBooking2(id);
                 Pane p = Visit.getPane(flag);
                 ScrollFront.scrollPane.setContent(p);
             } catch (SQLException e) {
@@ -357,7 +373,7 @@ public class Visit {String id;
             }
             newWindow.close();
         });
-        root_add.getChildren().addAll(name,emp,comboBox2,comboBox3);
+        root_add.getChildren().addAll(name,comboBox2);
         root_add.getChildren().addAll(DATA, points);
         newWindow.setTitle("Редактирование посещения");
         newWindow.setScene(scene_add);

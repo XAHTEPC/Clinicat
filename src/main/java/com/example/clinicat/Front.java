@@ -49,9 +49,9 @@ public class Front  extends Application {
         Front.lvl = postgre.getRole();
         System.out.println(Front.lvl);
         System.out.println("OK");
-        if(Front.lvl.equals("Local_manager")){
+        if(Front.lvl.equals("SuperVisor")){
             root.getChildren().remove(pane);
-            pane = LocalManagerFront.getStartFront();
+            pane = SuperVisorFront.getStartFront();
             root.getChildren().add(pane);
         }
         else if (Front.lvl.equals("Administrator")) {

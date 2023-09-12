@@ -304,6 +304,7 @@ public class Employee {String id;
             del.setLayoutX(400);
             del.setLayoutY(0 + u);
             String workid = mas[i].workID;
+            String empID = mas[i].id;
             edit.setOnAction(r -> {
                 try {
                     change(id, fl3);
@@ -315,7 +316,7 @@ public class Employee {String id;
             });
             del.setOnAction(r -> {
                 try {
-                    Postgre.delWork(workid);
+                    Postgre.delWork(workid,empID);
                     Pane pane = Employee.getPane2(true,true,true);
                     ScrollFront.scrollPane.setContent(pane);
                 } catch (SQLException e) {
@@ -370,6 +371,9 @@ public class Employee {String id;
         TextField position = new TextField();
         position.setText(el.post);
         position.setLayoutX(180);
+        position.setEditable(false);
+        if(flagAdmin)
+            position.setEditable(true);
         position.setBackground(null);
         position.setLayoutY(114);
         position.setStyle("-fx-background-color: transparent;");
@@ -460,7 +464,7 @@ public class Employee {String id;
             String t1,t2,t3,t4,t5,t6,t7,t8,t9,t10, passSalt;
             t1 = name.getText();
             t2 = position.getText();
-            String lvl="Стилист";
+            String lvl=el.post;
             if(t2.equals("Администратор"))
                 lvl = "Администратор";
             else if(t2.equals("Аналитик"))

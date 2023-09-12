@@ -3,7 +3,7 @@ package com.example.clinicat.View;
 import com.example.clinicat.DataBase.Postgre;
 import com.example.clinicat.Front;
 import com.example.clinicat.PaneModel.Employee;
-import com.example.clinicat.PaneModel.Structure;
+import com.example.clinicat.PaneModel.Establishment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -47,7 +47,7 @@ public class AdminFront {
 
         structure.setOnAction(t ->{
             try {
-                pane_scroll = Structure.getPane(true);
+                pane_scroll = Establishment.getPane(true);
                 Front.root.getChildren().remove(Front.pane);
                 Front.pane = ScrollFront.getStartFront(pane_scroll,5);
                 Front.root.getChildren().add(Front.pane);
@@ -120,7 +120,7 @@ public class AdminFront {
         addStructure.setPrefSize(50,25);
         addStructure.setOnAction(t1 -> {
             try {
-                Structure.addStructure();
+                Establishment.addStructure();
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -217,10 +217,6 @@ public class AdminFront {
                 String w2 = comboBox2.getSelectionModel().getSelectedItem();
                 try {
                     Postgre.addWork(w1,w2);
-                    Pane pane2 = Employee.getPane2(true,true,true);
-                    Front.root.getChildren().remove(Front.pane);
-                    Front.pane = ScrollFront.getStartFront(pane_scroll,5);
-                    Front.root.getChildren().add(Front.pane);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 } catch (FileNotFoundException e) {

@@ -2,7 +2,7 @@ package com.example.clinicat.View;
 
 import com.example.clinicat.Front;
 import com.example.clinicat.PaneModel.Employee;
-import com.example.clinicat.PaneModel.Structure;
+import com.example.clinicat.PaneModel.Establishment;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,7 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
-public class LocalManagerFront {
+public class SuperVisorFront {
     static Pane pane_scroll;
     static int pushB = 0;
     public static Pane getStartFront() throws FileNotFoundException {
@@ -38,7 +38,7 @@ public class LocalManagerFront {
         structure.setPrefSize(236,25);
         structure.setOnAction(t ->{
             try {
-                pane_scroll = Structure.getPane(true);
+                pane_scroll = Establishment.getPane(true);
                 Front.root.getChildren().remove(Front.pane);
                 Front.pane = ScrollFront.getStartFront(pane_scroll, 1);
                 Front.root.getChildren().add(Front.pane);
@@ -96,7 +96,7 @@ public class LocalManagerFront {
                 pushB = 0;
             Front.root.getChildren().remove(Front.pane);
             try {
-                Front.pane =LocalManagerFront.getStartFront();
+                Front.pane = SuperVisorFront.getStartFront();
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }

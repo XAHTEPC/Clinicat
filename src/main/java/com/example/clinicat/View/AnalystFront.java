@@ -77,7 +77,7 @@ public class AnalystFront {
         structure.setPrefSize(236,25);
         structure.setOnAction(t ->{
             try {
-                pane_scroll = Structure.getPane(false);
+                pane_scroll = Establishment.getPane(false);
                 Front.root.getChildren().remove(Front.pane);
                 Front.pane = ScrollFront.getStartFront(pane_scroll,2);
                 Front.root.getChildren().add(Front.pane);

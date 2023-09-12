@@ -23,7 +23,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
-public class Structure {
+public class Establishment {
     String id;
     String name;
     String address;
@@ -32,7 +32,7 @@ public class Structure {
     String tel;
     String num;
 
-    public Structure(String id, String name, String address, String specialty_name, String post, String tel, String num) {
+    public Establishment(String id, String name, String address, String specialty_name, String post, String tel, String num) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -80,7 +80,7 @@ public class Structure {
         point.setLayoutY(60);
         point.setFont(Font.font("Verdana",13));
 
-        Structure[] mas = Postgre.getAllStructure();
+        Establishment[] mas = Postgre.getAllEstablishment();
         int u = 80;
         for(int i=0; i<mas.length;i++, u+=70){
             if(mas[i]==null)
@@ -184,7 +184,7 @@ public class Structure {
     }
 
     public static void change(String id) throws SQLException, FileNotFoundException, ClassNotFoundException {
-        Structure el = Postgre.getStructure_byID(id);
+        Establishment el = Postgre.getStructure_byID(id);
         Group root_add = new Group();
         Scene scene_add = new Scene(root_add, 410, 410);
         Stage newWindow = new Stage();
@@ -271,7 +271,7 @@ public class Structure {
             if(check(t1,t2,t4,t5,t6)) {
                 try {
                     Postgre.UpdateStructure(finalId, t1, t2, t3, t4, t5, t6);
-                    Pane p = Structure.getPane(true);
+                    Pane p = Establishment.getPane(true);
                     ScrollFront.scrollPane.setContent(p);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
@@ -401,7 +401,7 @@ public class Structure {
         if(t4.length()!=6)
             return false;
         m = t4.toCharArray();
-        for(int i=0;i<t4.length();i++){
+        for(int i=1;i<t4.length();i++){
             if(m[i]>='0'&&m[i]<='9')
                 continue;
             return false;

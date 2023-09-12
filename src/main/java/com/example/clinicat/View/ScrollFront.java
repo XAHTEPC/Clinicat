@@ -47,7 +47,7 @@ public class ScrollFront {
             Front.root.getChildren().remove(Front.pane);
             if(fl==1){ //управляющий
                 try {
-                    Front.pane = LocalManagerFront.getStartFront();
+                    Front.pane = SuperVisorFront.getStartFront();
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }

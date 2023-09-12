@@ -2,11 +2,13 @@ package com.example.clinicat.PaneModel;
 
 import com.example.clinicat.DataBase.Postgre;
 import com.example.clinicat.Front;
+import com.example.clinicat.View.ChoiseFront;
 import com.example.clinicat.View.ScrollFront;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,6 +31,7 @@ import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 public class Client {
     String id;
@@ -384,13 +387,15 @@ public class Client {
         newWindow.setScene(scene_add);
         newWindow.show();
     }
+    static Pane choise;
     static ObservableList<String> service = FXCollections.observableArrayList(mas2);
     public static void add_pos(String id, boolean flagStaff) throws SQLException, FileNotFoundException, ClassNotFoundException {
         Group root_add = new Group();
-        Scene scene_add = new Scene(root_add, 410, 410);
+        Scene scene_add = new Scene(root_add, 418, 598);
         Stage newWindow = new Stage();
         newWindow.initStyle(StageStyle.DECORATED);
         Client el = Postgre.getClient_byID(id);
+
 
         FileInputStream Url;
         Url = new FileInputStream("png/addVisit.png");
@@ -419,32 +424,38 @@ public class Client {
         comboBox2.setLayoutX(180);
         comboBox2.setLayoutY(110);
 
+        choise = new Pane();
+        choise.setLayoutX(30);
+        choise.setLayoutY(200);
         comboBox2.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 Name = (comboBox2.getSelectionModel().getSelectedItem());
                 System.out.println("NAme:"+Name);
-                try {
-                    mas2 = Postgre.getService_name(Name);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
+                root_add.getChildren().remove(choise);
+                if(Name.equals("Чистый пес")||Name.equals("Чистый лис")){
+                    try {
+                        choise = ChoiseFront.getPane(0,"");
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-                service = FXCollections.observableArrayList(mas2);
-                comboBox3.setItems(service);
-
+                else {
+                    try {
+                        choise = ChoiseFront.getPane(1,"");
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                choise.setLayoutX(30);
+                choise.setLayoutY(200);
+                root_add.getChildren().addAll(choise);
             }
         });
-        comboBox3 = new ComboBox<String>(service);
-        comboBox3.setMaxWidth(215);
-        comboBox3.setMinWidth(215);
-        comboBox3.setBackground(null);
-        comboBox3.setLayoutX(180);
-        comboBox3.setLayoutY(155);
-
 
         TextField DATA = new TextField();
         Format formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -453,31 +464,21 @@ public class Client {
         DATA.setText(string);
         DATA.setLayoutX(180);
         DATA.setBackground(null);
-        DATA.setLayoutY(200);
+        DATA.setLayoutY(416);
         DATA.setStyle("-fx-background-color: transparent;");
         DATA.setMaxHeight(32);
         DATA.setMaxWidth(215);
 
-        TextField emp = new TextField();
-        emp.setEditable(false);
-        emp.setBackground(Background.EMPTY);
-        //emp.setBackground(null);
-        emp.setLayoutX(180);
-        emp.setText(Front.login);
-        emp.setLayoutY(245);
-        emp.setMaxHeight(32);
-        emp.setMaxWidth(215);
-
         TextField points = new TextField();
         points.setBackground(null);
         points.setLayoutX(180);
-        points.setLayoutY(290);
+        points.setLayoutY(460);
         points.setMaxHeight(32);
         points.setMaxWidth(215);
 
         Button save = new Button();
-        save.setLayoutX(116);
-        save.setLayoutY(344);
+        save.setLayoutX(125);
+        save.setLayoutY(514);
         save.setBackground(null);
         save.setPrefSize(150,32);
 
@@ -486,34 +487,76 @@ public class Client {
             String t1,t2,t3,t4,t5,t6,t7 = "";
             t1 = name.getText();
             t2 = comboBox2.getSelectionModel().getSelectedItem();
-            t3 = comboBox3.getSelectionModel().getSelectedItem();
             t4 = DATA.getText();
-            t5 = emp.getText();
             t6 = points.getText();
+            String service_id = "1";
             if(chechPos(t4,t6)) {
+                boolean[] mas = ChoiseFront.getGruMas();
+                if(mas==null){
+                    mas = ChoiseFront.getVetMas();
+                }
+                String[] arr = {""};
+                String lastID="";
                 try {
-                    t7 = Postgre.getPrice(t3);
-                } catch (SQLException e1) {
-                    throw new RuntimeException(e1);
-                } catch (ClassNotFoundException e1) {
-                    throw new RuntimeException(e1);
-                } catch (FileNotFoundException e1) {
-                    throw new RuntimeException(e1);
+                    arr = Postgre.getEmployee_from(t2);
+                    Postgre.addReceipt(finalId_visit,t2);
+                    lastID = Postgre.getLastReceipt();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                boolean fla = mas.length==3;
+                int kol = mas.length;
+                for(int i=0;i<mas.length;i++){
+                    if(mas[i]){
+                        if(fla&&i==0){
+                            service_id = "1";
+                        }
+                        else  if(i==0) {
+                            service_id = "4";
+                        } else if(fla&&i==1){
+                            service_id = "2";
+                        }
+                        else  if(i==1) {
+                            service_id = "5";
+                        }if(fla&&i==2){
+                            service_id = "3";
+                        }
+                        else  if(i==2) {
+                            service_id = "6";
+                        }
+                        else  if(i==3) {
+                            service_id = "7";
+                        }
+                        else  if(i==4) {
+                            service_id = "8";
+                        }
+                        int emp_id = (int) Math.random()*(arr.length-1)+0;
+                        String emp = arr[emp_id];
+                        try {
+                            Postgre.addBooking(finalId_visit, service_id, t4, t6,emp,lastID);
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        } catch (ClassNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                 }
                 try {
-                    Postgre.addVisit(finalId_visit, t2, t3, t4, t7, t6);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (FileNotFoundException e1) {
-                    throw new RuntimeException(e1);
-                } catch (ClassNotFoundException e1) {
-                    throw new RuntimeException(e1);
+                    Postgre.UpdateReceipt(lastID, finalId_visit);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 }
                 newWindow.close();
             }
             name.setText("Проверьте данные");
         });
-        root_add.getChildren().addAll(name,emp,comboBox2,comboBox3);
+        root_add.getChildren().addAll(name,comboBox2);
         root_add.getChildren().addAll(DATA, points, save);
         newWindow.setTitle("Добавить посещение");
         newWindow.setScene(scene_add);
